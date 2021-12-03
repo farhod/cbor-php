@@ -30,12 +30,12 @@ abstract class Utils
 
     public static function hexToBigInteger(string $value): BigInteger
     {
-        return BigInteger::fromBase($value, 16);
+        return Decoder::fromBase($value, 16);
     }
 
     public static function hexToString(string $value): string
     {
-        return BigInteger::fromBase(bin2hex($value), 16)->toBase(10);
+        return Decoder::fromBase(bin2hex($value), 16)->toBase(10);
     }
 
     public static function decode(string $data): string

@@ -52,7 +52,7 @@ final class UnsignedIntegerObject extends AbstractCBORObject implements Normaliz
 
     public static function createFromHex(string $value): self
     {
-        $integer = BigInteger::fromBase($value, 16);
+        $integer = Decoder::fromBase($value, 16);
 
         return self::createBigInteger($integer);
     }
@@ -60,7 +60,6 @@ final class UnsignedIntegerObject extends AbstractCBORObject implements Normaliz
     public static function createFromString(string $value): self
     {
         $integer = BigInteger::of($value);
-
         return self::createBigInteger($integer);
     }
 
@@ -75,7 +74,7 @@ final class UnsignedIntegerObject extends AbstractCBORObject implements Normaliz
             return (string) $this->additionalInformation;
         }
 
-        $integer = BigInteger::fromBase(bin2hex($this->data), 16);
+        $integer = Decoder::fromBase(bin2hex($this->data), 16);
 
         return $integer->toBase(10);
     }
@@ -96,15 +95,15 @@ final class UnsignedIntegerObject extends AbstractCBORObject implements Normaliz
                 $ai = $integer->toInt();
                 $data = null;
                 break;
-            case $integer->isLessThan(BigInteger::fromBase('FF', 16)):
+            case $integer->isLessThan(Decoder::fromBase('FF', 16)):
                 $ai = 24;
                 $data = self::hex2bin(str_pad($integer->toBase(16), 2, '0', STR_PAD_LEFT));
                 break;
-            case $integer->isLessThan(BigInteger::fromBase('FFFF', 16)):
+            case $integer->isLessThan(Decoder::fromBase('FFFF', 16)):
                 $ai = 25;
                 $data = self::hex2bin(str_pad($integer->toBase(16), 4, '0', STR_PAD_LEFT));
                 break;
-            case $integer->isLessThan(BigInteger::fromBase('FFFFFFFF', 16)):
+            case $integer->isLessThan(Decoder::fromBase('FFFFFFFF', 16)):
                 $ai = 26;
                 $data = self::hex2bin(str_pad($integer->toBase(16), 8, '0', STR_PAD_LEFT));
                 break;

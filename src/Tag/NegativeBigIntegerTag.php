@@ -7,6 +7,7 @@ namespace CBOR\Tag;
 use Brick\Math\BigInteger;
 use CBOR\ByteStringObject;
 use CBOR\CBORObject;
+use CBOR\Decoder;
 use CBOR\IndefiniteLengthByteStringObject;
 use CBOR\Normalizable;
 use CBOR\Tag;
@@ -55,8 +56,8 @@ final class NegativeBigIntegerTag extends Tag implements Normalizable
     {
         /** @var ByteStringObject|IndefiniteLengthByteStringObject $object */
         $object = $this->object;
-        $integer = BigInteger::fromBase(bin2hex($object->getValue()), 16);
-        $minusOne = BigInteger::of(-1);
+        $integer = Decoder::fromBase(bin2hex($object->getValue()), 16);
+        $minusOne = Decoder::of(-1);
 
         return $minusOne->minus($integer)
             ->toBase(10)

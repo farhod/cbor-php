@@ -18,7 +18,12 @@ final class SinglePrecisionFloatObject extends Base
         return [self::OBJECT_SINGLE_PRECISION_FLOAT];
     }
 
-    public static function createFromLoadedData(int $additionalInformation, ?string $data): Base
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 * @return Base
+	 */
+    public static function createFromLoadedData(int $additionalInformation, $data): Base
     {
         return new self($additionalInformation, $data);
     }

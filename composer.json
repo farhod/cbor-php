@@ -1,5 +1,5 @@
 {
-    "name": "cbor-php/cbor-php",
+    "name": "spomky-labs/cbor-php",
     "type": "library",
     "license": "MIT",
     "keywords": ["CBOR", "Concise Binary Object Representation", "RFC7049"],

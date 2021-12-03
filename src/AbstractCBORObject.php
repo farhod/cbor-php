@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace CBOR;
 
 use function chr;
-use Stringable;
 
-abstract class AbstractCBORObject implements CBORObject, Stringable
+abstract class AbstractCBORObject implements CBORObject
 {
 	protected $additionalInformation;
 	private $majorType;

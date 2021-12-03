@@ -47,6 +47,7 @@ final class Decoder implements DecoderInterface
 
 	private $otherTypeManager;
 
+	const ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyz';
 	/**
 	 * @param TagManagerInterface|null         $tagObjectManager
 	 * @param OtherObjectManagerInterface|null $otherTypeManager
@@ -288,7 +289,7 @@ final class Decoder implements DecoderInterface
 			return BigInteger::of($sign . '1');
 		}
 
-		$pattern = '/[^' . \substr(Calculator::ALPHABET, 0, $base) . ']/';
+		$pattern = '/[^' . \substr(self::ALPHABET, 0, $base) . ']/';
 
 		if (\preg_match($pattern, \strtolower($number), $matches) === 1) {
 			throw new NumberFormatException(\sprintf('"%s" is not a valid character in base %d.', $matches[0], $base));

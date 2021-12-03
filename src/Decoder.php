@@ -35,6 +35,10 @@ use CBOR\Tag\UriTag;
 use InvalidArgumentException;
 use function ord;
 use RuntimeException;
+use Brick\Math\BigInteger;
+use Brick\Math\Exception\NumberFormatException;
+use Brick\Math\Internal\Calculator;
+
 use const STR_PAD_LEFT;
 
 final class Decoder implements DecoderInterface

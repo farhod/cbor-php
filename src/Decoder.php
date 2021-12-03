@@ -109,7 +109,7 @@ final class Decoder implements DecoderInterface
 	 * @param string|null $val
 	 * @return CBORObject
 	 */
-	private function processFinite(Stream $stream, int $mt, int $ai, string $val): CBORObject
+	private function processFinite(Stream $stream, int $mt, int $ai, $val): CBORObject
 	{
 		switch ($mt) {
 			case CBORObject::MAJOR_TYPE_UNSIGNED_INTEGER: //0

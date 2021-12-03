@@ -18,14 +18,14 @@ use IteratorAggregate;
  */
 class IndefiniteLengthMapObject extends AbstractCBORObject implements IteratorAggregate, Normalizable, ArrayAccess
 {
-    private const MAJOR_TYPE = self::MAJOR_TYPE_MAP;
+    const MAJOR_TYPE = self::MAJOR_TYPE_MAP;
 
-    private const ADDITIONAL_INFORMATION = self::LENGTH_INDEFINITE;
+    const ADDITIONAL_INFORMATION = self::LENGTH_INDEFINITE;
 
     /**
      * @var MapItem[]
      */
-    private array $data = [];
+    private $data = [];
 
     public function __construct()
     {

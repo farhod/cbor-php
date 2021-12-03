@@ -17,7 +17,12 @@ final class SimpleObject extends Base implements Normalizable
         return array_merge(range(0, 19), [24]);
     }
 
-    public static function createFromLoadedData(int $additionalInformation, ?string $data): Base
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 * @return Base
+	 */
+    public static function createFromLoadedData(int $additionalInformation, $data): Base
     {
         if ($additionalInformation === 24) {
             if ($data === null) {

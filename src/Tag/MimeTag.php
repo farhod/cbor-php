@@ -13,37 +13,48 @@ use InvalidArgumentException;
 
 final class MimeTag extends Tag implements Normalizable
 {
-    public function __construct(int $additionalInformation, ?string $data, CBORObject $object)
-    {
-        if (! $object instanceof TextStringObject && ! $object instanceof IndefiniteLengthTextStringObject) {
-            throw new InvalidArgumentException('This tag only accepts a Byte String object.');
-        }
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 * @param CBORObject  $object
+	 */
+	public function __construct(int $additionalInformation, $data, CBORObject $object)
+	{
+		if (!$object instanceof TextStringObject && !$object instanceof IndefiniteLengthTextStringObject) {
+			throw new InvalidArgumentException('This tag only accepts a Byte String object.');
+		}
 
-        parent::__construct($additionalInformation, $data, $object);
-    }
+		parent::__construct($additionalInformation, $data, $object);
+	}
 
-    public static function getTagId(): int
-    {
-        return self::TAG_MIME;
-    }
+	public static function getTagId(): int
+	{
+		return self::TAG_MIME;
+	}
 
-    public static function createFromLoadedData(int $additionalInformation, ?string $data, CBORObject $object): Tag
-    {
-        return new self($additionalInformation, $data, $object);
-    }
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 * @param CBORObject  $object
+	 * @return Tag
+	 */
+	public static function createFromLoadedData(int $additionalInformation, $data, CBORObject $object): Tag
+	{
+		return new self($additionalInformation, $data, $object);
+	}
 
-    public static function create(CBORObject $object): Tag
-    {
-        [$ai, $data] = self::determineComponents(self::TAG_MIME);
+	public static function create(CBORObject $object): Tag
+	{
+		list($ai, $data) = self::determineComponents(self::TAG_MIME);
 
-        return new self($ai, $data, $object);
-    }
+		return new self($ai, $data, $object);
+	}
 
-    public function normalize(): string
-    {
-        /** @var TextStringObject|IndefiniteLengthTextStringObject $object */
-        $object = $this->object;
+	public function normalize(): string
+	{
+		/** @var TextStringObject|IndefiniteLengthTextStringObject $object */
+		$object = $this->object;
 
-        return $object->normalize();
-    }
+		return $object->normalize();
+	}
 }

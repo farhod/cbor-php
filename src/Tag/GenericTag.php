@@ -14,7 +14,13 @@ final class GenericTag extends Tag
         return -1;
     }
 
-    public static function createFromLoadedData(int $additionalInformation, ?string $data, CBORObject $object): Tag
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 * @param CBORObject  $object
+	 * @return Tag
+	 */
+    public static function createFromLoadedData(int $additionalInformation, $data, CBORObject $object): Tag
     {
         return new self($additionalInformation, $data, $object);
     }

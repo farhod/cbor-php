@@ -9,20 +9,26 @@ use CBOR\Tag;
 
 final class Base64EncodingTag extends Tag
 {
-    public static function getTagId(): int
-    {
-        return self::TAG_ENCODED_BASE64;
-    }
+	public static function getTagId(): int
+	{
+		return self::TAG_ENCODED_BASE64;
+	}
 
-    public static function createFromLoadedData(int $additionalInformation, ?string $data, CBORObject $object): Tag
-    {
-        return new self($additionalInformation, $data, $object);
-    }
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 * @param CBORObject  $object
+	 * @return Tag
+	 */
+	public static function createFromLoadedData(int $additionalInformation, $data, CBORObject $object): Tag
+	{
+		return new self($additionalInformation, $data, $object);
+	}
 
-    public static function create(CBORObject $object): Tag
-    {
-        [$ai, $data] = self::determineComponents(self::TAG_ENCODED_BASE64);
+	public static function create(CBORObject $object): Tag
+	{
+		list ($ai, $data) = self::determineComponents(self::TAG_ENCODED_BASE64);
 
-        return new self($ai, $data, $object);
-    }
+		return new self($ai, $data, $object);
+	}
 }

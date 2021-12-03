@@ -8,14 +8,23 @@ use InvalidArgumentException;
 
 abstract class Tag extends AbstractCBORObject
 {
-    private const MAJOR_TYPE = self::MAJOR_TYPE_TAG;
+    const MAJOR_TYPE = self::MAJOR_TYPE_TAG;
+	protected $data;
+	protected $object;
 
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 * @param CBORObject  $object
+	 */
     public function __construct(
         int $additionalInformation,
-        protected ?string $data,
-        protected CBORObject $object
+        $data,
+        CBORObject $object
     ) {
-        parent::__construct(self::MAJOR_TYPE, $additionalInformation);
+	    $this->object = $object;
+	    $this->data = $data;
+	    parent::__construct(self::MAJOR_TYPE, $additionalInformation);
     }
 
     public function __toString(): string
@@ -28,16 +37,25 @@ abstract class Tag extends AbstractCBORObject
         return $result . $this->object;
     }
 
-    public function getData(): ?string
+	/**
+	 * @return string|null
+	 */
+    public function getData()
     {
         return $this->data;
     }
 
     abstract public static function getTagId(): int;
 
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 * @param CBORObject  $object
+	 * @return static
+	 */
     abstract public static function createFromLoadedData(
         int $additionalInformation,
-        ?string $data,
+        $data,
         CBORObject $object
     ): self;
 

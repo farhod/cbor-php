@@ -6,15 +6,15 @@ namespace CBOR;
 
 final class ByteStringObject extends AbstractCBORObject implements Normalizable
 {
-    private const MAJOR_TYPE = self::MAJOR_TYPE_BYTE_STRING;
+    const MAJOR_TYPE = self::MAJOR_TYPE_BYTE_STRING;
 
-    private string $value;
+    private $value;
 
-    private ?string $length = null;
+    private $length = null;
 
     public function __construct(string $data)
     {
-        [$additionalInformation, $length] = LengthCalculator::getLengthOfString($data);
+        list($additionalInformation, $length) = LengthCalculator::getLengthOfString($data);
 
         parent::__construct(self::MAJOR_TYPE, $additionalInformation);
         $this->length = $length;

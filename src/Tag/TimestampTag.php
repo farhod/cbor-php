@@ -19,7 +19,12 @@ use const STR_PAD_RIGHT;
 
 final class TimestampTag extends Tag implements Normalizable
 {
-    public function __construct(int $additionalInformation, ?string $data, CBORObject $object)
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 * @param CBORObject  $object
+	 */
+    public function __construct(int $additionalInformation, $data, CBORObject $object)
     {
         if (! $object instanceof UnsignedIntegerObject && ! $object instanceof NegativeIntegerObject && ! $object instanceof HalfPrecisionFloatObject && ! $object instanceof SinglePrecisionFloatObject && ! $object instanceof DoublePrecisionFloatObject) {
             throw new InvalidArgumentException('This tag only accepts integer-based or float-based objects.');
@@ -32,14 +37,20 @@ final class TimestampTag extends Tag implements Normalizable
         return self::TAG_EPOCH_DATETIME;
     }
 
-    public static function createFromLoadedData(int $additionalInformation, ?string $data, CBORObject $object): Tag
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 * @param CBORObject  $object
+	 * @return Tag
+	 */
+    public static function createFromLoadedData(int $additionalInformation, $data, CBORObject $object): Tag
     {
         return new self($additionalInformation, $data, $object);
     }
 
     public static function create(CBORObject $object): Tag
     {
-        [$ai, $data] = self::determineComponents(self::TAG_EPOCH_DATETIME);
+        list($ai, $data) = self::determineComponents(self::TAG_EPOCH_DATETIME);
 
         return new self($ai, $data, $object);
     }

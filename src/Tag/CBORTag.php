@@ -15,14 +15,20 @@ final class CBORTag extends Tag implements Normalizable
         return self::TAG_CBOR;
     }
 
-    public static function createFromLoadedData(int $additionalInformation, ?string $data, CBORObject $object): Tag
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 * @param CBORObject  $object
+	 * @return Tag
+	 */
+    public static function createFromLoadedData(int $additionalInformation, $data, CBORObject $object): Tag
     {
         return new self($additionalInformation, $data, $object);
     }
 
     public static function create(CBORObject $object): Tag
     {
-        [$ai, $data] = self::determineComponents(self::TAG_CBOR);
+        list($ai, $data) = self::determineComponents(self::TAG_CBOR);
 
         return new self($ai, $data, $object);
     }

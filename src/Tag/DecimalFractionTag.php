@@ -17,7 +17,12 @@ use RuntimeException;
 
 final class DecimalFractionTag extends Tag implements Normalizable
 {
-    public function __construct(int $additionalInformation, ?string $data, CBORObject $object)
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 * @param CBORObject  $object
+	 */
+    public function __construct(int $additionalInformation, $data, CBORObject $object)
     {
         if (! extension_loaded('bcmath')) {
             throw new RuntimeException('The extension "bcmath" is required to use this tag');
@@ -43,7 +48,7 @@ final class DecimalFractionTag extends Tag implements Normalizable
 
     public static function create(CBORObject $object): self
     {
-        [$ai, $data] = self::determineComponents(self::TAG_DECIMAL_FRACTION);
+        list($ai, $data) = self::determineComponents(self::TAG_DECIMAL_FRACTION);
 
         return new self($ai, $data, $object);
     }
@@ -53,7 +58,13 @@ final class DecimalFractionTag extends Tag implements Normalizable
         return self::TAG_DECIMAL_FRACTION;
     }
 
-    public static function createFromLoadedData(int $additionalInformation, ?string $data, CBORObject $object): Tag
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 * @param CBORObject  $object
+	 * @return Tag
+	 */
+    public static function createFromLoadedData(int $additionalInformation, $data, CBORObject $object): Tag
     {
         return new self($additionalInformation, $data, $object);
     }

@@ -15,7 +15,7 @@ final class TagManager implements TagManagerInterface
     /**
      * @var string[]
      */
-    private array $classes = [];
+    private $classes = [];
 
     public static function create(): self
     {
@@ -37,7 +37,13 @@ final class TagManager implements TagManagerInterface
         return array_key_exists($value, $this->classes) ? $this->classes[$value] : GenericTag::class;
     }
 
-    public function createObjectForValue(int $additionalInformation, ?string $data, CBORObject $object): Tag
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 * @param CBORObject  $object
+	 * @return Tag
+	 */
+    public function createObjectForValue(int $additionalInformation, $data, CBORObject $object): Tag
     {
         $value = $additionalInformation;
         if ($additionalInformation >= 24) {

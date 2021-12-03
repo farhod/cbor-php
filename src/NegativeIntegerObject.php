@@ -10,13 +10,19 @@ use const STR_PAD_LEFT;
 
 final class NegativeIntegerObject extends AbstractCBORObject implements Normalizable
 {
-    private const MAJOR_TYPE = self::MAJOR_TYPE_NEGATIVE_INTEGER;
+    const MAJOR_TYPE = self::MAJOR_TYPE_NEGATIVE_INTEGER;
+	private $data;
 
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 */
     public function __construct(
         int $additionalInformation,
-        private ?string $data
+        string $data
     ) {
-        parent::__construct(self::MAJOR_TYPE, $additionalInformation);
+	    $this->data = $data;
+	    parent::__construct(self::MAJOR_TYPE, $additionalInformation);
     }
 
     public function __toString(): string

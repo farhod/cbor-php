@@ -23,7 +23,12 @@ final class BreakObject extends Base
         return [self::OBJECT_BREAK];
     }
 
-    public static function createFromLoadedData(int $additionalInformation, ?string $data): Base
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 * @return Base
+	 */
+    public static function createFromLoadedData(int $additionalInformation, $data): Base
     {
         return new self();
     }

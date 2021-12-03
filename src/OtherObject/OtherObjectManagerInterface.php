@@ -8,5 +8,10 @@ use CBOR\OtherObject;
 
 interface OtherObjectManagerInterface
 {
-    public function createObjectForValue(int $value, ?string $data): OtherObject;
+	/**
+	 * @param int         $value
+	 * @param string|null $data
+	 * @return OtherObject
+	 */
+	public function createObjectForValue(int $value, $data): OtherObject;
 }

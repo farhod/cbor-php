@@ -6,14 +6,14 @@ namespace CBOR;
 
 final class IndefiniteLengthTextStringObject extends AbstractCBORObject implements Normalizable
 {
-    private const MAJOR_TYPE = self::MAJOR_TYPE_TEXT_STRING;
+    const MAJOR_TYPE = self::MAJOR_TYPE_TEXT_STRING;
 
-    private const ADDITIONAL_INFORMATION = self::LENGTH_INDEFINITE;
+    const ADDITIONAL_INFORMATION = self::LENGTH_INDEFINITE;
 
     /**
      * @var TextStringObject[]
      */
-    private array $data = [];
+    private $data = [];
 
     public function __construct()
     {

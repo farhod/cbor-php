@@ -10,13 +10,19 @@ use const STR_PAD_LEFT;
 
 final class UnsignedIntegerObject extends AbstractCBORObject implements Normalizable
 {
-    private const MAJOR_TYPE = self::MAJOR_TYPE_UNSIGNED_INTEGER;
+    const MAJOR_TYPE = self::MAJOR_TYPE_UNSIGNED_INTEGER;
+	private $data;
 
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 */
     public function __construct(
         int $additionalInformation,
-        private ?string $data
+        $data
     ) {
-        parent::__construct(self::MAJOR_TYPE, $additionalInformation);
+	    $this->data = $data;
+	    parent::__construct(self::MAJOR_TYPE, $additionalInformation);
     }
 
     public function __toString(): string
@@ -29,7 +35,12 @@ final class UnsignedIntegerObject extends AbstractCBORObject implements Normaliz
         return $result;
     }
 
-    public static function createObjectForValue(int $additionalInformation, ?string $data): self
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 * @return static
+	 */
+    public static function createObjectForValue(int $additionalInformation, $data): self
     {
         return new self($additionalInformation, $data);
     }

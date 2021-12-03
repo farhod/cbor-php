@@ -19,22 +19,25 @@ use IteratorAggregate;
  */
 final class MapObject extends AbstractCBORObject implements Countable, IteratorAggregate, Normalizable, ArrayAccess
 {
-    private const MAJOR_TYPE = self::MAJOR_TYPE_MAP;
+    const MAJOR_TYPE = self::MAJOR_TYPE_MAP;
 
     /**
      * @var MapItem[]
      */
-    private array $data;
+    private $data;
 
-    private ?string $length = null;
+	/**
+	 * @var string|mixed|null
+	 */
+    private $length = null;
 
     /**
      * @param MapItem[] $data
      */
     public function __construct(array $data = [])
     {
-        [$additionalInformation, $length] = LengthCalculator::getLengthOfArray($data);
-        array_map(static function ($item): void {
+        list($additionalInformation, $length) = LengthCalculator::getLengthOfArray($data);
+        array_map(static function ($item) {
             if (! $item instanceof MapItem) {
                 throw new InvalidArgumentException('The list must contain only MapItem objects.');
             }
@@ -77,29 +80,41 @@ final class MapObject extends AbstractCBORObject implements Countable, IteratorA
             throw new InvalidArgumentException('Invalid key. Shall be normalizable');
         }
         $this->data[$key->normalize()] = MapItem::create($key, $value);
-        [$this->additionalInformation, $this->length] = LengthCalculator::getLengthOfArray($this->data);
+        list($this->additionalInformation, $this->length) = LengthCalculator::getLengthOfArray($this->data);
 
         return $this;
     }
 
-    public function has(int|string $key): bool
+	/**
+	 * @param int|string $key
+	 * @return bool
+	 */
+    public function has($key): bool
     {
         return array_key_exists($key, $this->data);
     }
 
-    public function remove(int|string $index): self
+	/**
+	 * @param int|string $index
+	 * @return $this
+	 */
+    public function remove($index): self
     {
         if (! $this->has($index)) {
             return $this;
         }
         unset($this->data[$index]);
         $this->data = array_values($this->data);
-        [$this->additionalInformation, $this->length] = LengthCalculator::getLengthOfArray($this->data);
+        list($this->additionalInformation, $this->length) = LengthCalculator::getLengthOfArray($this->data);
 
         return $this;
     }
 
-    public function get(int|string $index): CBORObject
+	/**
+	 * @param int|string $index
+	 * @return CBORObject
+	 */
+    public function get($index): CBORObject
     {
         if (! $this->has($index)) {
             throw new InvalidArgumentException('Index not found.');
@@ -116,7 +131,7 @@ final class MapObject extends AbstractCBORObject implements Countable, IteratorA
         }
 
         $this->data[$key->normalize()] = $object;
-        [$this->additionalInformation, $this->length] = LengthCalculator::getLengthOfArray($this->data);
+        list($this->additionalInformation, $this->length) = LengthCalculator::getLengthOfArray($this->data);
 
         return $this;
     }
@@ -161,7 +176,7 @@ final class MapObject extends AbstractCBORObject implements Countable, IteratorA
         return $this->get($offset);
     }
 
-    public function offsetSet($offset, $value): void
+    public function offsetSet($offset, $value)
     {
         if (! $offset instanceof CBORObject) {
             throw new InvalidArgumentException('Invalid key');
@@ -173,7 +188,7 @@ final class MapObject extends AbstractCBORObject implements Countable, IteratorA
         $this->set(MapItem::create($offset, $value));
     }
 
-    public function offsetUnset($offset): void
+    public function offsetUnset($offset)
     {
         $this->remove($offset);
     }

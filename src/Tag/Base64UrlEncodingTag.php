@@ -14,14 +14,20 @@ final class Base64UrlEncodingTag extends Tag
         return self::TAG_ENCODED_BASE64_URL;
     }
 
-    public static function createFromLoadedData(int $additionalInformation, ?string $data, CBORObject $object): Tag
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 * @param CBORObject  $object
+	 * @return Tag
+	 */
+    public static function createFromLoadedData(int $additionalInformation, $data, CBORObject $object): Tag
     {
         return new self($additionalInformation, $data, $object);
     }
 
     public static function create(CBORObject $object): Tag
     {
-        [$ai, $data] = self::determineComponents(self::TAG_ENCODED_BASE64_URL);
+        list($ai, $data) = self::determineComponents(self::TAG_ENCODED_BASE64_URL);
 
         return new self($ai, $data, $object);
     }

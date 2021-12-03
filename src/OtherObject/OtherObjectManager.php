@@ -37,7 +37,12 @@ class OtherObjectManager implements OtherObjectManagerInterface
         return array_key_exists($value, $this->classes) ? $this->classes[$value] : GenericObject::class;
     }
 
-    public function createObjectForValue(int $value, ?string $data): OtherObject
+	/**
+	 * @param int         $value
+	 * @param string|null $data
+	 * @return OtherObject
+	 */
+    public function createObjectForValue(int $value, $data): OtherObject
     {
         /** @var OtherObject $class */
         $class = $this->getClassForValue($value);

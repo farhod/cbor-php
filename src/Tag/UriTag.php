@@ -13,7 +13,12 @@ use InvalidArgumentException;
 
 final class UriTag extends Tag implements Normalizable
 {
-    public function __construct(int $additionalInformation, ?string $data, CBORObject $object)
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 * @param CBORObject  $object
+	 */
+    public function __construct(int $additionalInformation, $data, CBORObject $object)
     {
         if (! $object instanceof TextStringObject && ! $object instanceof IndefiniteLengthTextStringObject) {
             throw new InvalidArgumentException('This tag only accepts a Text String object.');
@@ -27,14 +32,20 @@ final class UriTag extends Tag implements Normalizable
         return self::TAG_URI;
     }
 
-    public static function createFromLoadedData(int $additionalInformation, ?string $data, CBORObject $object): Tag
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 * @param CBORObject  $object
+	 * @return Tag
+	 */
+    public static function createFromLoadedData(int $additionalInformation, $data, CBORObject $object): Tag
     {
         return new self($additionalInformation, $data, $object);
     }
 
     public static function create(CBORObject $object): Tag
     {
-        [$ai, $data] = self::determineComponents(self::TAG_URI);
+        list($ai, $data) = self::determineComponents(self::TAG_URI);
 
         return new self($ai, $data, $object);
     }

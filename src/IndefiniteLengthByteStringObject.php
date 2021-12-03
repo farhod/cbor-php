@@ -6,14 +6,14 @@ namespace CBOR;
 
 final class IndefiniteLengthByteStringObject extends AbstractCBORObject implements Normalizable
 {
-    private const MAJOR_TYPE = self::MAJOR_TYPE_BYTE_STRING;
+    const MAJOR_TYPE = self::MAJOR_TYPE_BYTE_STRING;
 
-    private const ADDITIONAL_INFORMATION = self::LENGTH_INDEFINITE;
+     const ADDITIONAL_INFORMATION = self::LENGTH_INDEFINITE;
 
     /**
      * @var ByteStringObject[]
      */
-    private array $chunks = [];
+    private  $chunks = [];
 
     public function __construct()
     {

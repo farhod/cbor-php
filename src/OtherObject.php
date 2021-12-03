@@ -6,13 +6,19 @@ namespace CBOR;
 
 abstract class OtherObject extends AbstractCBORObject
 {
-    private const MAJOR_TYPE = self::MAJOR_TYPE_OTHER_TYPE;
+    const MAJOR_TYPE = self::MAJOR_TYPE_OTHER_TYPE;
+	protected $data;
 
-    public function __construct(
+	/**
+	 * @param int    $additionalInformation
+	 * @param string|null $data
+	 */
+	public function __construct(
         int $additionalInformation,
-        protected ?string $data
+        $data
     ) {
-        parent::__construct(self::MAJOR_TYPE, $additionalInformation);
+		$this->data = $data;
+		parent::__construct(self::MAJOR_TYPE, $additionalInformation);
     }
 
     public function __toString(): string
@@ -25,7 +31,10 @@ abstract class OtherObject extends AbstractCBORObject
         return $result;
     }
 
-    public function getContent(): ?string
+	/**
+	 * @return string|null
+	 */
+    public function getContent()
     {
         return $this->data;
     }
@@ -35,5 +44,10 @@ abstract class OtherObject extends AbstractCBORObject
      */
     abstract public static function supportedAdditionalInformation(): array;
 
-    abstract public static function createFromLoadedData(int $additionalInformation, ?string $data): self;
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 * @return static
+	 */
+    abstract public static function createFromLoadedData(int $additionalInformation, $data): self;
 }

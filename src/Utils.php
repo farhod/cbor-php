@@ -51,7 +51,7 @@ abstract class Utils
     /**
      * @param mixed|null $data
      */
-    public static function assertString($data, ?string $message = null): void
+    public static function assertString($data, $message = null)
     {
         if (! is_string($data)) {
             throw new InvalidArgumentException($message ?? '');

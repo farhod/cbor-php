@@ -15,7 +15,12 @@ final class GenericObject extends Base
         return [];
     }
 
-    public static function createFromLoadedData(int $additionalInformation, ?string $data): Base
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 * @return Base
+	 */
+    public static function createFromLoadedData(int $additionalInformation, $data): Base
     {
         if ($data !== null && ord($data) < 32) {
             throw new InvalidArgumentException('Invalid simple value. Content data should not be present.');

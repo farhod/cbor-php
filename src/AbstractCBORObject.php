@@ -9,10 +9,19 @@ use Stringable;
 
 abstract class AbstractCBORObject implements CBORObject, Stringable
 {
+	protected $additionalInformation;
+	private $majorType;
+
+	/**
+	 * @param int $majorType
+	 * @param int $additionalInformation
+	 */
     public function __construct(
-        private int $majorType,
-        protected int $additionalInformation
+        int $majorType,
+        int $additionalInformation
     ) {
+	    $this->additionalInformation = $additionalInformation;
+	    $this->majorType = $majorType;
     }
 
     public function __toString(): string

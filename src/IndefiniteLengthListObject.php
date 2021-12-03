@@ -18,14 +18,14 @@ use IteratorAggregate;
  */
 class IndefiniteLengthListObject extends AbstractCBORObject implements IteratorAggregate, Normalizable, ArrayAccess
 {
-    private const MAJOR_TYPE = self::MAJOR_TYPE_LIST;
+    const MAJOR_TYPE = self::MAJOR_TYPE_LIST;
 
-    private const ADDITIONAL_INFORMATION = self::LENGTH_INDEFINITE;
+    const ADDITIONAL_INFORMATION = self::LENGTH_INDEFINITE;
 
     /**
      * @var CBORObject[]
      */
-    private array $data = [];
+    private  $data = [];
 
     public function __construct()
     {
@@ -118,7 +118,7 @@ class IndefiniteLengthListObject extends AbstractCBORObject implements IteratorA
         return $this->get($offset);
     }
 
-    public function offsetSet($offset, $value): void
+    public function offsetSet($offset, $value)
     {
         if ($offset === null) {
             $this->add($value);
@@ -129,7 +129,7 @@ class IndefiniteLengthListObject extends AbstractCBORObject implements IteratorA
         $this->set($offset, $value);
     }
 
-    public function offsetUnset($offset): void
+    public function offsetUnset($offset)
     {
         $this->remove($offset);
     }

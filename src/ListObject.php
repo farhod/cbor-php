@@ -19,22 +19,25 @@ use IteratorAggregate;
  */
 class ListObject extends AbstractCBORObject implements Countable, IteratorAggregate, Normalizable, ArrayAccess
 {
-    private const MAJOR_TYPE = self::MAJOR_TYPE_LIST;
+    const MAJOR_TYPE = self::MAJOR_TYPE_LIST;
 
     /**
      * @var CBORObject[]
      */
-    private array $data;
+    private $data;
 
-    private ?string $length = null;
+	/**
+	 * @var string|mixed|null
+	 */
+    private $length = null;
 
     /**
      * @param CBORObject[] $data
      */
     public function __construct(array $data = [])
     {
-        [$additionalInformation, $length] = LengthCalculator::getLengthOfArray($data);
-        array_map(static function ($item): void {
+        list($additionalInformation, $length) = LengthCalculator::getLengthOfArray($data);
+        array_map(static function ($item) {
             if (! $item instanceof CBORObject) {
                 throw new InvalidArgumentException('The list must contain only CBORObject objects.');
             }
@@ -69,7 +72,7 @@ class ListObject extends AbstractCBORObject implements Countable, IteratorAggreg
     public function add(CBORObject $object): self
     {
         $this->data[] = $object;
-        [$this->additionalInformation, $this->length] = LengthCalculator::getLengthOfArray($this->data);
+        list($this->additionalInformation, $this->length) = LengthCalculator::getLengthOfArray($this->data);
 
         return $this;
     }
@@ -86,7 +89,7 @@ class ListObject extends AbstractCBORObject implements Countable, IteratorAggreg
         }
         unset($this->data[$index]);
         $this->data = array_values($this->data);
-        [$this->additionalInformation, $this->length] = LengthCalculator::getLengthOfArray($this->data);
+        list($this->additionalInformation, $this->length) = LengthCalculator::getLengthOfArray($this->data);
 
         return $this;
     }
@@ -107,7 +110,7 @@ class ListObject extends AbstractCBORObject implements Countable, IteratorAggreg
         }
 
         $this->data[$index] = $object;
-        [$this->additionalInformation, $this->length] = LengthCalculator::getLengthOfArray($this->data);
+        list($this->additionalInformation, $this->length) = LengthCalculator::getLengthOfArray($this->data);
 
         return $this;
     }
@@ -145,7 +148,7 @@ class ListObject extends AbstractCBORObject implements Countable, IteratorAggreg
         return $this->get($offset);
     }
 
-    public function offsetSet($offset, $value): void
+    public function offsetSet($offset, $value)
     {
         if ($offset === null) {
             $this->add($value);
@@ -156,7 +159,7 @@ class ListObject extends AbstractCBORObject implements Countable, IteratorAggreg
         $this->set($offset, $value);
     }
 
-    public function offsetUnset($offset): void
+    public function offsetUnset($offset)
     {
         $this->remove($offset);
     }

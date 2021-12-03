@@ -24,7 +24,12 @@ final class TrueObject extends Base implements Normalizable
         return [self::OBJECT_TRUE];
     }
 
-    public static function createFromLoadedData(int $additionalInformation, ?string $data): Base
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 * @return Base
+	 */
+    public static function createFromLoadedData(int $additionalInformation, $data): Base
     {
         return new self();
     }

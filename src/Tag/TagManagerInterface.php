@@ -9,5 +9,11 @@ use CBOR\Tag;
 
 interface TagManagerInterface
 {
-    public function createObjectForValue(int $additionalInformation, ?string $data, CBORObject $object): Tag;
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 * @param CBORObject  $object
+	 * @return Tag
+	 */
+    public function createObjectForValue(int $additionalInformation, $data, CBORObject $object): Tag;
 }

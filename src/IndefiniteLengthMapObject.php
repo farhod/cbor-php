@@ -58,12 +58,20 @@ class IndefiniteLengthMapObject extends AbstractCBORObject implements IteratorAg
         return $this;
     }
 
-    public function has(int|string $key): bool
+	/**
+	 * @param int|string $key
+	 * @return bool
+	 */
+    public function has($key): bool
     {
         return array_key_exists($key, $this->data);
     }
 
-    public function remove(int|string $index): self
+	/**
+	 * @param int|string $index
+	 * @return $this
+	 */
+    public function remove($index): self
     {
         if (! $this->has($index)) {
             return $this;
@@ -74,7 +82,11 @@ class IndefiniteLengthMapObject extends AbstractCBORObject implements IteratorAg
         return $this;
     }
 
-    public function get(int|string $index): CBORObject
+	/**
+	 * @param int|string $index
+	 * @return CBORObject
+	 */
+    public function get($index): CBORObject
     {
         if (! $this->has($index)) {
             throw new InvalidArgumentException('Index not found.');
@@ -130,7 +142,7 @@ class IndefiniteLengthMapObject extends AbstractCBORObject implements IteratorAg
         return $this->get($offset);
     }
 
-    public function offsetSet($offset, $value): void
+    public function offsetSet($offset, $value)
     {
         if (! $offset instanceof CBORObject) {
             throw new InvalidArgumentException('Invalid key');
@@ -142,7 +154,7 @@ class IndefiniteLengthMapObject extends AbstractCBORObject implements IteratorAg
         $this->set(MapItem::create($offset, $value));
     }
 
-    public function offsetUnset($offset): void
+    public function offsetUnset($offset)
     {
         $this->remove($offset);
     }

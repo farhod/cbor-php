@@ -19,7 +19,12 @@ final class HalfPrecisionFloatObject extends Base implements Normalizable
         return [self::OBJECT_HALF_PRECISION_FLOAT];
     }
 
-    public static function createFromLoadedData(int $additionalInformation, ?string $data): Base
+	/**
+	 * @param int         $additionalInformation
+	 * @param string|null $data
+	 * @return Base
+	 */
+    public static function createFromLoadedData(int $additionalInformation, $data): Base
     {
         return new self($additionalInformation, $data);
     }
@@ -33,7 +38,10 @@ final class HalfPrecisionFloatObject extends Base implements Normalizable
         return new self(self::OBJECT_HALF_PRECISION_FLOAT, $value);
     }
 
-    public function normalize(): float|int
+	/**
+	 * @return float|int
+	 */
+    public function normalize()
     {
         $exponent = $this->getExponent();
         $mantissa = $this->getMantissa();

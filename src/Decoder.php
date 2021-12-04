@@ -300,7 +300,7 @@ final class Decoder implements DecoderInterface
 			return BigInteger::of($sign . $number);
 		}
 
-		$result = Calculator::get()->fromBase($number, $base);
+		$result = self::fromBase($number, $base);
 
 		return BigInteger::of($sign . $result);
 	}

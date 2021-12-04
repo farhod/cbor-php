@@ -39,6 +39,7 @@ use Brick\Math\BigInteger;
 use Brick\Math\Exception\NumberFormatException;
 use Brick\Math\Internal\Calculator;
 
+
 use const STR_PAD_LEFT;
 
 final class Decoder implements DecoderInterface
@@ -300,7 +301,7 @@ final class Decoder implements DecoderInterface
 			return BigInteger::of($sign . $number);
 		}
 
-		$result = self::fromBase($number, $base);
+		$result = Calculator::get()->fromBase($number, $base);
 
 		return BigInteger::of($sign . $result);
 	}
